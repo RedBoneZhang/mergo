@@ -85,6 +85,9 @@ func deepMap(dst, src reflect.Value, visited map[uintptr]*visit, depth int, conf
 			srcKind := srcElement.Kind()
 			if srcKind == reflect.Ptr && dstKind != reflect.Ptr {
 				srcElement = srcElement.Elem()
+				if !srcElement.IsValid() {
+					continue
+				}
 				srcKind = reflect.TypeOf(srcElement.Interface()).Kind()
 			} else if dstKind == reflect.Ptr {
 				// Can this work? I guess it can't.
